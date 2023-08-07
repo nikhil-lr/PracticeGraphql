@@ -1,0 +1,48 @@
+#Magento Customer GraphQl Schema
+
+type Query {
+    testcustomer: Testcustomer
+        @resolver(class: "Nikhil\\PraticeGraphQl\\Model\\Resolver\\Customer")
+        @doc(description: "The testcustomer query returns information about a login customer")
+}
+
+type Testcustomer @doc(description: "Testcustomer defines the customer name and other details") {
+    entity_id: Int
+    firstname: String
+    lastname: String
+    email: String
+    status: Int
+}
+
+type Query {
+    getCustomerList(
+        id: Int @doc(description: "Customer Id")
+    ): GetCustomerList
+        @resolver(class: "Nikhil\\PraticeGraphQl\\Model\\Resolver\\CustomerList")
+        @doc(description: "The getCustomerList query gives customer info based on passed id.")
+}
+
+type GetCustomerList @doc(description: "getCustomerList defined the customer data") {
+    entity_id: Int
+    firstname: String
+    lastname: String
+    email: String
+    status: Int
+}
+
+type Mutation {
+    contactusFormSubmit(input: ContactusInput!): ContactusOutput 
+            @resolver(class: "\\Nikhil\\PraticeGraphQl\\Model\\Resolver\\Contactus")
+            @doc(description:"Contact us form")
+}
+
+input ContactusInput {
+    fullname: String @doc(description: "The customer's full name")
+    email: String @doc(description: "The customer's email address")
+    telephone: String @doc(description: "The Telephone")
+    message: String @doc(description: "The customer's message")
+}
+
+type ContactusOutput {
+   success_message: String @doc(description: "Success Message")
+}
